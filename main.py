@@ -17,6 +17,10 @@ def main() -> None:
     assert "\n" not in line, "entry must be a single line"
     assert 1 <= len(line) <= 200, "entry must be 1-200 characters"
     assert line.strip(), "entry must not be only whitespace"
+    # Gate: the roast must actually roast the agent itself, so a swapped
+    # or truncated line fails loudly instead of submitting silently.
+    assert line.startswith("My agent "), "entry must roast my own agent"
+    assert line.endswith("feelings."), "entry must end with the punchline"
     os.makedirs("/output", exist_ok=True)
     with open("/output/entry.txt", "w", encoding="utf-8", newline="\n") as f:
         f.write(line)
